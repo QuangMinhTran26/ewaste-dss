@@ -67,3 +67,16 @@ for i, metal in enumerate(metals):
     new_mae = mean_absolute_error(y2_test.iloc[:, i], y2_pred[:, i])
     improvement = ((old_mae - new_mae) / old_mae) * 100
     print(f"{metal:<15} {old_mae:>10.4f} {new_mae:>10.4f} {improvement:>11.1f}%")
+
+    metal_prices = {
+    'Gold (g)':     85000 / 1000,  # per gram
+    'Silver (g)':   900 / 1000,
+    'Aluminum (g)': 2.5 / 1000,
+    'Platinum (g)': 32000 / 1000,
+    'Nickel (g)':   14 / 1000,
+    'Tin (g)':      26 / 1000,
+    'Lithium (g)':  13 / 1000,
+    'Rhodium (g)':  4700 / 1000,
+}
+
+recovery_rate = 0.90  # 90% standard recovery assumption
