@@ -47,3 +47,11 @@ features_v2 = ['Condition_encoded', 'DeviceType_encoded',
                 'Market Value of Metals']
 
 X2 = df[features_v2]
+
+
+X2_train, X2_test, y2_train, y2_test = train_test_split(
+    X2, y, test_size=0.2, random_state=42)
+
+
+knn_v2 = KNeighborsRegressor(n_neighbors=5)
+knn_v2.fit(X2_train, y2_train)
