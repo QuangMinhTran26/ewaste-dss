@@ -55,3 +55,15 @@ X2_train, X2_test, y2_train, y2_test = train_test_split(
 
 knn_v2 = KNeighborsRegressor(n_neighbors=5)
 knn_v2.fit(X2_train, y2_train)
+
+y2_pred = knn_v2.predict(X2_test)
+
+# Compare MAE
+print("MAE comparison — old vs new model:")
+print(f"{'Metal':<15} {'Old MAE':>10} {'New MAE':>10} {'Improvement':>12}")
+print("-" * 50)
+for i, metal in enumerate(metals):
+    old_mae = mean_absolute_error(y_test.iloc[:, i], y_pred[:, i])
+    new_mae = mean_absolute_error(y2_test.iloc[:, i], y2_pred[:, i])
+    improvement = ((old_mae - new_mae) / old_mae) * 100
+    print(f"{metal:<15} {old_mae:>10.4f} {new_mae:>10.4f} {improvement:>11.1f}%")
