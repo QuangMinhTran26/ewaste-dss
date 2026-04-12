@@ -144,5 +144,10 @@ sample_device = {
     'Device Age': 5,
     'Market Value of Metals': 300
 }
-# Test with same sample device
+
 evaluate_device_scenarios(sample_device, cost_of_recovery=25)
+
+
+iphone_search = df[df['Item Name'].str.contains('iPhone 12', case=False, na=False)]
+print(f"Found {len(iphone_search)} rows")
+print(iphone_search[['Item Name', 'Brand Name', 'Device Condition', 'Gold (g)']].head())
