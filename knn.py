@@ -41,3 +41,9 @@ for i, metal in enumerate(metals):
 print("Average metal content in dataset:")
 for metal in metals:
     print(f"  {metal}: {df[metal].mean():.4f}g")
+
+features_v2 = ['Condition_encoded', 'DeviceType_encoded',
+                'Year of Manufacture', 'Device Age',
+                'Market Value of Metals']
+
+X2 = df[features_v2]
