@@ -31,3 +31,13 @@ knn = KNeighborsRegressor(n_neighbors=5)
 knn.fit(X_train, y_train)
 
 y_pred = knn.predict(X_test)
+
+print("Mean Absolute Error per metal:")
+for i, metal in enumerate(metals):
+    mae = mean_absolute_error(y_test.iloc[:, i], y_pred[:, i])
+    print(f"  {metal}: {mae:.4f}g")
+
+
+print("Average metal content in dataset:")
+for metal in metals:
+    print(f"  {metal}: {df[metal].mean():.4f}g")
