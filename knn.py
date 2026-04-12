@@ -8,3 +8,18 @@ df['Condition_encoded'] = df['Device Condition'].map(condition_map)
 # Encode Device Type
 device_type_map = {'Appliance': 0, 'Consumer Electronics': 1, 'IT Equipment': 2}
 df['DeviceType_encoded'] = df['Device Type'].map(device_type_map)
+
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+import numpy as np
+
+features = ['Condition_encoded', 'DeviceType_encoded',
+            'Year of Manufacture', 'Device Age']
+
+metals = ['Gold (g)', 'Silver (g)', 'Aluminum (g)',
+          'Platinum (g)', 'Nickel (g)', 'Tin (g)',
+          'Lithium (g)', 'Rhodium (g)']
+
+X = df[features]
+y = df[metals]
