@@ -80,3 +80,60 @@ for i, metal in enumerate(metals):
 }
 
 recovery_rate = 0.90  # 90% standard recovery assumption
+
+scenarios = {
+    'Pessimistic': 0.80,  # prices 20% below current
+    'Base':        1.00,  # current dataset prices
+    'Optimistic':  1.20   # prices 20% above current
+}
+
+def evaluate_device_scenarios(device_features, cost_of_recovery):
+    print("=" * 55)
+    print("SCENARIO ANALYSIS")
+    print("=" * 55)
+
+    import pandas as pd
+    X_new = pd.DataFrame([device_features])
+    predicted_metals = knn_v2.predict(X_new)[0]
+
+    results = {}
+
+    for scenario_name, price_multiplier in scenarios.items():
+        revenue = 0
+        for i, metal in enumerate(metals):
+            grams = predicted_metals[i]
+            price = metal_prices[metal] * price_multiplier
+            value = grams * price * recovery_rate
+            revenue += value
+
+        npv = revenue - cost_of_recovery
+        results[scenario_name] = npv
+
+        if npv > 0:
+            decision = "DISASSEMBLE"
+        else:
+            decision = "MANUAL CHECK"
+
+        print(f"\n{scenario_name} scenario (prices ×{price_multiplier}):")
+        print(f"  NPV:        ${npv:.2f}")
+        print(f"  Decision:   {decision}")
+
+    print("\n" + "=" * 55)
+    print("SUMMARY")
+    print("=" * 55)
+    print(f"  Pessimistic NPV: ${results['Pessimistic']:.2f}")
+    print(f"  Base NPV:        ${results['Base']:.2f}")
+    print(f"  Optimistic NPV:  ${results['Optimistic']:.2f}")
+
+    # Overall recommendation
+    if all(v > 0 for v in results.values()):
+        print("\n STRONG RECOMMENDATION: DISASSEMBLE")
+        print("   Profitable under all three scenarios")
+    elif results['Base'] > 0:
+        print("\n CONDITIONAL RECOMMENDATION: DISASSEMBLE")
+        print("   Profitable under base and optimistic scenario")
+        print("   Monitor price risk carefully")
+    else:
+        print("\n RECOMMENDATION: MANUAL CHECK")
+        print("   Not profitable under base scenario")
+
