@@ -137,3 +137,12 @@ def evaluate_device_scenarios(device_features, cost_of_recovery):
         print("\n RECOMMENDATION: MANUAL CHECK")
         print("   Not profitable under base scenario")
 
+sample_device = {
+    'Condition_encoded': 1,        # Average
+    'DeviceType_encoded': 1,       # Consumer Electronics
+    'Year of Manufacture': 2019,
+    'Device Age': 5,
+    'Market Value of Metals': 300
+}
+# Test with same sample device
+evaluate_device_scenarios(sample_device, cost_of_recovery=25)
