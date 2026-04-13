@@ -25,3 +25,10 @@ y = df[metals]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 knn = KNeighborsRegressor(n_neighbors=5)
 knn.fit(X_train, y_train)
+
+metal_prices = {
+    'Gold (g)': 85.0, 'Silver (g)': 0.9, 'Aluminum (g)': 0.0025,
+    'Platinum (g)': 32.0, 'Nickel (g)': 0.014, 'Tin (g)': 0.026,
+    'Lithium (g)': 0.013, 'Rhodium (g)': 4.7
+}
+recovery_rate = 0.90
