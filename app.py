@@ -36,6 +36,7 @@ recovery_rate = 0.90
 
 st.header("E-Waste DSS — Gatekeeping Recommendation")
 
+
 condition = st.selectbox("Device Condition", ['Broken', 'Average', 'Good'])
 device_type = st.selectbox("Device Type", ['Appliance', 'Consumer Electronics', 'IT Equipment'])
 year = st.number_input("Year of Manufacture", min_value=2000, max_value=2024, value=2019)
