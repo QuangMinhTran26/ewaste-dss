@@ -32,3 +32,6 @@ metal_prices = {
     'Lithium (g)': 0.013, 'Rhodium (g)': 4.7
 }
 recovery_rate = 0.90
+
+
+st.header("E-Waste DSS — Gatekeeping Recommendation")
