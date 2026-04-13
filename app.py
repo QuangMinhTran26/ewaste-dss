@@ -35,3 +35,39 @@ recovery_rate = 0.90
 
 
 st.header("E-Waste DSS — Gatekeeping Recommendation")
+
+condition = st.selectbox("Device Condition", ['Broken', 'Average', 'Good'])
+device_type = st.selectbox("Device Type", ['Appliance', 'Consumer Electronics', 'IT Equipment'])
+year = st.number_input("Year of Manufacture", min_value=2000, max_value=2024, value=2019)
+age = st.number_input("Device Age (years)", min_value=0, max_value=25, value=5)
+market_value = st.number_input("Market Value of Metals (USD)", min_value=0, value=300)
+cost = st.number_input("Cost of Recovery (USD)", min_value=0, value=25)
+
+if st.button("Run Analysis"):
+    input_data = pd.DataFrame([{
+        'Condition_encoded': condition_map[condition],
+        'DeviceType_encoded': device_type_map[device_type],
+        'Year of Manufacture': year,
+        'Device Age': age,
+        'Market Value of Metals': market_value
+    }])
+
+    predicted = knn.predict(input_data)[0]
+    scenarios = {'Pessimistic': 0.80, 'Base': 1.00, 'Optimistic': 1.20}
+    results = {}
+
+    for name, multiplier in scenarios.items():
+        revenue = sum(predicted[i] * metal_prices[m] * multiplier * recovery_rate
+                     for i, m in enumerate(metals))
+        results[name] = revenue - cost
+
+    st.subheader("Results")
+    for name, npv in results.items():
+        st.write(f"**{name} NPV:** ${npv:.2f}")
+
+    if all(v > 0 for v in results.values()):
+        st.success("STRONG RECOMMENDATION: DISASSEMBLE")
+    elif results['Base'] > 0:
+        st.warning("CONDITIONAL RECOMMENDATION: DISASSEMBLE — monitor price risk")
+    else:
+        st.error("RECOMMENDATION: MANUAL CHECK")
