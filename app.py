@@ -65,6 +65,9 @@ if st.button("Run Analysis"):
     }])
 
     predicted = knn.predict(input_data)[0]
+    st.subheader("Predicted Metal Content")
+    for i, metal in enumerate(metals):
+        st.write(f"{metal}: {predicted[i]:.4f}g")
     scenarios = {'Pessimistic': 0.80, 'Base': 1.00, 'Optimistic': 1.20}
     results = {}
 
