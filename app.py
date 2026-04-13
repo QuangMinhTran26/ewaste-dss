@@ -31,6 +31,13 @@ metal_prices = {
     'Platinum (g)': 32.0, 'Nickel (g)': 0.014, 'Tin (g)': 0.026,
     'Lithium (g)': 0.013, 'Rhodium (g)': 4.7
 }
+
+default_recovery_cost = {  #for completely new device with unknown cost of recovery
+    'Consumer Electronics': 27.68, #the default cost is average of each catergoy
+    'Appliance': 27.57,
+    'IT Equipment': 27.43
+}
+
 recovery_rate = 0.90
 
 
@@ -42,8 +49,12 @@ device_type = st.selectbox("Device Type", ['Appliance', 'Consumer Electronics', 
 year = st.number_input("Year of Manufacture", min_value=2000, max_value=2024, value=2019)
 age = st.number_input("Device Age (years)", min_value=0, max_value=25, value=5)
 market_value = st.number_input("Market Value of Metals (USD)", min_value=0, value=300)
-cost = st.number_input("Cost of Recovery (USD)", min_value=0, value=25)
-
+default_cost = default_recovery_cost[device_type]
+cost = st.number_input(
+    f"Cost of Recovery (USD) — default for {device_type}",
+    min_value=0,
+    value=default_cost
+)
 if st.button("Run Analysis"):
     input_data = pd.DataFrame([{
         'Condition_encoded': condition_map[condition],
