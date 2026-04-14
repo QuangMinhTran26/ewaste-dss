@@ -48,7 +48,7 @@ condition = st.selectbox("Device Condition", ['Broken', 'Average', 'Good'])
 device_type = st.selectbox("Device Type", ['Appliance', 'Consumer Electronics', 'IT Equipment'])
 year = st.number_input("Year of Manufacture", min_value=1990, max_value=2025, value=2019)
 age = st.number_input("Device Age (years)", min_value=0, max_value=25, value=5)
-market_value = st.number_input("Market Value of Metals (USD)", min_value=0.0, value=300.0)
+market_value = st.number_input("Market Value of Metals (USD/g)", min_value=0.0, value=300.0)
 default_cost = default_recovery_cost[device_type]
 cost = st.number_input(
     f"Cost of Recovery (USD) — default for {device_type}",
